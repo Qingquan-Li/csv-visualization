@@ -1,4 +1,4 @@
-# CSV Data Visualization
+# CSV Visualization
 
 ## 1. About the Project
 
@@ -21,19 +21,15 @@ Task:
 
 ## 2. Tech Stack
 
-- Frontend:
-  - Language:
-    - TypeScript
-  - Frameworks/Libraries:
-    - React.js
-    - Tailwind CSS
-- Backend:
-  - Language:
-    - TypeScript
-  - Frameworks/Libraries:
-    - Express.js
+- Frontend (client):
+  - TypeScript
+  - React.js
+  - Tailwind CSS
+- Backend (server):
+  - TypeScript
+  - Express.js
 - Deployment:
-    - Docker on a Linux Server
-    - Nginx
+    - Docker
+    - Linux
 - CI/CD:
     - GitHub Actions
