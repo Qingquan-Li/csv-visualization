@@ -1,48 +1,44 @@
-####################################
-# First stage: build the react app #
-####################################
+##################################
+# Stage 1: Build the application #
+##################################
 
-# Use an official Node runtime as a build environment
-# By naming this stage "build", we can later reference it in a later stage
-FROM node:18 as build
+# Official Node.js runtime as the base image
+FROM node:22-alpine as builder
 
-# Set the working directory in the container to /app
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the container at the current directory (/app)
-COPY package*.json ./
+# Copy all project files, except those excluded in .dockerignore
+COPY . .
 
-# Install the React app's dependencies inside the container
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code into the container at the current directory (/app)
-COPY . ./
-
-# Declare a build-time variable
+# ARG VITE_API_URL=http://localhost:3000/api
+# Build arguments are available only during build (image creation)
+# Environment variables are available at build time and runtime (container)
+# Set the build argument in docker-compose.yml or CI/CD pipeline (GitHub Actions)
 ARG VITE_API_URL
-# Set the environment variable inside the container during the build
 ENV VITE_API_URL=${VITE_API_URL}
-# Build the React app with the environment variable
+
+# Build the application
 RUN npm run build
 
-####################################################
-# Second stage: Use Nginx to serve the build files #
-####################################################
+###################################################
+# Stage 2: Serve the built application with Nginx #
+###################################################
 
-# Use an official Nginx runtime as the parent image
+# Official Nginx image as the base image
 FROM nginx:alpine
 
-# Copy the build files from the build environment to the Nginx container
-# for create-react-app
+# Copy the built files from the previous stage
+# for create-react-app:
 # COPY --from=build /app/build /usr/share/nginx/html
-# for vite
-COPY --from=build /app/dist /usr/share/nginx/html
+# for vite:
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose port 80 to the host
 EXPOSE 80
 
-# Start Nginx
-# `daemon off` ensures that Nginx runs in the foreground instead of as a background
-# process. This is important in a Docker container because Docker containers are designed
-# to run a foreground process, and when this process ends, the container stops.
+# Run Niginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
