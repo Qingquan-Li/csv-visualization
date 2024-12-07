@@ -78,3 +78,5 @@ jobs:
           push: true                 # Push the image after building
           # Tag Docker image as 'latest' when pushing to 'main' branch, and 'dev' when pushing to 'dev' branch, otherwise tag as 'other'
           tags: ghcr.io/${{ github.repository_owner }}/csv-visualization-client:${{ github.ref == 'refs/heads/main' && 'latest' || (github.ref == 'refs/heads/dev' && 'dev' || 'other') }}
+          # Pass build arguments to the Dockerfile
+          build-args: VITE_API_URL=/api

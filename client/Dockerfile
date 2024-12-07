@@ -14,9 +14,11 @@ COPY . .
 # Install dependencies
 RUN npm install
 
-# Declare a build-time variable
+# ARG VITE_API_URL=http://localhost:3000/api
+# Build arguments are available only during build (image creation)
+# Environment variables are available at build time and runtime (container)
+# Set the build argument in docker-compose.yml or CI/CD pipeline (GitHub Actions)
 ARG VITE_API_URL
-# Set the environment variable inside the container during the build
 ENV VITE_API_URL=${VITE_API_URL}
 
 # Build the application
