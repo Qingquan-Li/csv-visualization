@@ -1,4 +1,4 @@
-# CSV Data Visualization
+# CSV Visualization
 
 ## 1. About the Project
 
@@ -21,19 +21,31 @@ Task:
 
 ## 2. Tech Stack
 
-- Frontend:
-  - Language:
-    - TypeScript
-  - Frameworks/Libraries:
-    - React.js
-    - Tailwind CSS
-- Backend:
-  - Language:
-    - TypeScript
-  - Frameworks/Libraries:
-    - Express.js
+- Frontend (client):
+  - TypeScript
+  - React.js
+  - Tailwind CSS
+- Backend (server):
+  - TypeScript
+  - Express.js
 - Deployment:
-    - Docker on a Linux Server
-    - Nginx
+    - Docker
+    - Linux
 - CI/CD:
     - GitHub Actions
+
+## 3. Running the Project
+
+### Prerequisites:
+
+- [Docker](https://www.docker.com/get-started/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Build and run the Docker containers (client and server):
+
+```bash
+cd /path/to/csv-visualization
+docker-compose up --build
+```
+
+The client will be running at http://localhost:5173
