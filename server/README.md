@@ -17,19 +17,23 @@ cd /path/to/server
 npm install
 ```
 
-2. Run the server with TypeScript
-
+2. Run the server
+  
 ```bash
 cd /path/to/server
-npx ts-node src/server.ts
+npm run start
 ```
 
-3. Or compile TypeScript to JavaScript and run the server
+Same as:
 
 ```bash
 cd /path/to/server
+
 # Compile TypeScript to JavaScript
 npx tsc
+# Or:
+# npm run build
+
 # Run the server
 node dist/server.js
 ```

@@ -24,7 +24,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const us_500_csv_path = path.join(__dirname, '..', '..', 'app', 'data', 'us-500.csv');
+const us_500_csv_path = path.join(__dirname, 'data', 'us-500.csv');
 let data: Customer[] = [];
 
 // Read the CSV file and load the data

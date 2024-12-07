@@ -33,3 +33,19 @@ Task:
     - Linux
 - CI/CD:
     - GitHub Actions
+
+## 3. Running the Project
+
+### Prerequisites:
+
+- [Docker](https://www.docker.com/get-started/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Build and run the Docker containers (client and server):
+
+```bash
+cd /path/to/csv-visualization
+docker-compose up --build
+```
+
+The client will be running at http://localhost:5173
