@@ -10,14 +10,7 @@ The project is deployed on a Linux server (Ubuntu) with Docker and Nginx.
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Nginx](https://nginx.org/)
 
-### 1.2 Pull the Docker images from GitHub Container Registry
-
-```bash
-sudo docker pull ghcr.io/qingquan-li/csv-visualization-client:latest
-sudo docker pull ghcr.io/qingquan-li/csv-visualization-server:latest
-```
-
-### 1.3 Run the Docker containers with Docker Compose
+### 1.2 Run the Docker containers with Docker Compose
 
 ```bash
 cd path/to/csv-visualization/deployment
