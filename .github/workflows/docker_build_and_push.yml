@@ -1,0 +1,80 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  # Job 1: Build and push the server image
+  build_server:
+    runs-on: ubuntu-latest
+
+    # Set permissions for the GIHUB_TOKEN secret
+    permissions:
+      contents: read   # Allows reading the repository contents
+      packages: write  # Allows pushing packages (Docker images) to GitHub Container Registry
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Step 3: Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}          # Automatically use the username of the user that triggered the workflow run
+          password: ${{ secrets.GITHUB_TOKEN }}  # Use the auto-generated GITHUB_TOKEN secret for the password
+
+      # Step 4: Build and push the Docker image
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./server          # Path to your 'api' directory
+          file: ./server/Dockerfile  # Path to your Dockerfile
+          push: true                 # Push the image after building
+          # Tag Docker image as 'latest' when pushing to 'main' branch, and 'dev' when pushing to 'dev' branch, otherwise tag as 'other'
+          tags: ghcr.io/${{ github.repository_owner }}/csv-visualization-server:${{ github.ref == 'refs/heads/main' && 'latest' || (github.ref == 'refs/heads/dev' && 'dev' || 'other') }}
+
+  # Job 2: Build and push the client image
+  build_client:
+    runs-on: ubuntu-latest
+
+    # Set permissions for the GIHUB_TOKEN secret
+    permissions:
+      contents: read   # Allows reading the repository contents
+      packages: write  # Allows pushing packages (Docker images) to GitHub Container Registry
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Step 3: Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}          # Automatically use the username of the user that triggered the workflow run
+          password: ${{ secrets.GITHUB_TOKEN }}  # Use the auto-generated GITHUB_TOKEN secret for the password
+
+      # Step 4: Build and push the Docker image
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./client          # Path to your 'client' directory
+          file: ./client/Dockerfile  # Path to your Dockerfile
+          push: true                 # Push the image after building
+          # Tag Docker image as 'latest' when pushing to 'main' branch, and 'dev' when pushing to 'dev' branch, otherwise tag as 'other'
+          tags: ghcr.io/${{ github.repository_owner }}/csv-visualization-client:${{ github.ref == 'refs/heads/main' && 'latest' || (github.ref == 'refs/heads/dev' && 'dev' || 'other') }}
