@@ -17,7 +17,7 @@ export default function GithubCorner() {
   };
   return (
     <>
-      <a href="https://github.com/Qingquan-Li/dashboard-haskell-react"
+      <a href="https://github.com/qingquan-li/csv-visualization"
         className="github-corner" aria-label="View source on GitHub">
         <svg width="80" height="80" viewBox="0 0 250 250"
           style={svgStyle} aria-hidden="true">
